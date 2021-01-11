@@ -1,3 +1,5 @@
+`strict`;
+
 let user = {
   age: 54,
   name: "Kyle",
@@ -48,17 +50,40 @@ class HashTable {
     let address = this._hash(key);
     const currentBucket = this.data[address];
     if (currentBucket) {
+      // looping thru current bucket, might have multiple items
       for (let i = 0; i < currentBucket.length; i++) {
         if (currentBucket[i][0] === key) {
+          console.log(currentBucket[i][1]);
           return currentBucket[i][1];
         }
       }
     }
+    // nothing in the bucket
     return undefined;
-  } // O(1), if no collision
+  } // O(1), if well optimized
+
+  // downsides: has to loop thru the whole map, unordered
+  keys() {
+    const keysArray = [];
+    for (let i = 0; i < this.data.length; i++) {
+      if (this.data[i]) {
+        // if there's something in memory space
+        console.log(this.data[i][0][0]);
+        keysArray.push(this.data[i][0][0]);
+      }
+    }
+    return keysArray;
+  }
 }
 
-const myHashTable = new HashTable(50);
+const myHashTable = new HashTable(50); // number of mem spaces
 // set
-myHashTable.set();
+myHashTable.set("apples", 69);
+myHashTable.set("pears", 44);
+myHashTable.set("oranges", 420);
+myHashTable.set("grapes", 100);
+
 // get
+myHashTable.get("apples");
+// gettings keys
+myHashTable.keys();
